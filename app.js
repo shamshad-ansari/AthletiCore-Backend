@@ -1,10 +1,32 @@
-const express = require('express')
-const app = express()
+const express = require("express");
+const connectDB = require("./config/db");
+const cors = require("cors");
+require("dotenv").config();
 
-const port = 5000;
+const app = express();
+const port = 3000;
 
-app.get('/', (req, res)=>{
-    res.send('Welocome To AthletiCore')
-})
+//Middleware
+app.use(cors());
+app.use(express.json());
 
-app.listen(port, console.log(`App is listening on port ${port}`))
+//Routes
+app.get("/", (req, res) => {
+  res.send("Welcome to the home page!");
+});
+
+app.get("/hello", (req, res) => {
+  res.send("Welcome To AthletiCore");
+});
+
+//Resolve the connectDB Promise and start the server
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URI);
+    app.listen(port, console.log(`App is listening on port ${port}`));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+start();
