@@ -11,11 +11,10 @@ app.use(cors());
 app.use(express.json());
 
 //Routes
-app.get("/", (req, res) => {
-  res.send("Welcome to the home page!");
-});
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/users", userRoutes);
 
-app.get("/hello", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Welcome To AthletiCore");
 });
 
